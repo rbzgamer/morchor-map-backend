@@ -14,11 +14,7 @@ import { Room } from "./Components/map/Navbar/room/Room";
 import { Directions } from "./Components/map/Directions";
 import { DirectionBar } from "./Components/map/Navbar/DirectionBar";
 
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-} from "@vis.gl/react-google-maps";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 export default function App() {
   const [results, setResults] = useState([]);

@@ -49,8 +49,9 @@ export const Search = ({
   };
 
   useEffect(() => {
+    setChecked(true);
     loadSearch();
-  }, []);
+  }, [searchData]);
 
   const handleSubmit = async () => {
     setLatitudeFromLocation(lat);
