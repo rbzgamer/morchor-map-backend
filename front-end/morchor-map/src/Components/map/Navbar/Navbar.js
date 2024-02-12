@@ -82,7 +82,7 @@ export const Navbar = ({
     <>
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 510 }}
+        sx={{ p: "2px 4px", display: "flex", alignItems: "center", maxWidth: 510 }}
       >
         {choose !== "Faculty" && (
           <>

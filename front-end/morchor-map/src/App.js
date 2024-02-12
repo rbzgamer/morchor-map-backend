@@ -83,7 +83,7 @@ export default function App() {
           {/* Base Map */}
           <div style={{ height: "100vh", width: "100%" }}>
             <APIProvider apiKey="AIzaSyC4hElrEUcoCj-GAu6Y6qtfh2xOq4iZf9E">
-              <Map center={position} zoom={15} mapId="d024e2b838dd693a">
+              <Map center={position} zoom={18} mapId="d024e2b838dd693a">
                 <Marker
                   position={{ lat: latitudeFromUser, lng: longitudeFromUser }}
                   onClick={() => {

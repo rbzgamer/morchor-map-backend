@@ -12,7 +12,7 @@ export const DirectionBar = ({originName, destinationName, setUseRoute, latitude
   }
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", backgroundColor: "white"}}>
       <Box
         component="form"
         sx={{
