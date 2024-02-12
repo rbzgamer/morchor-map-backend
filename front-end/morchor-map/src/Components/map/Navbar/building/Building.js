@@ -1,7 +1,7 @@
 import "./Building.css";
 import { useEffect, useState } from "react";
 
-import { IconButton, Divider } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";
@@ -57,10 +57,12 @@ export const Building = ({
   }, []);
 
   const handleClickToRoom = async () => {
-    setLatitudeFromLocation(lat);
-    setLongitudeFromLocation(lon);
-    setSelectBuilding(select);
-    setChoose("Room");
+    if (select !== "") {
+      setLatitudeFromLocation(lat);
+      setLongitudeFromLocation(lon);
+      setSelectBuilding(select);
+      setChoose("Room");
+    }
   };
 
   const handleSubmit = async () => {
@@ -91,6 +93,7 @@ export const Building = ({
 
   const showBuilding = () => {
     if (!check) {
+      let height = window.innerHeight;
       const listOrders = building.map((object) => {
         return (
           <Card

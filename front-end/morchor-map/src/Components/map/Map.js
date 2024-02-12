@@ -67,6 +67,7 @@ export const MapCon = ({
                         setUseRoute(true)
                         setDestinationLat(marker.latitude)
                         setDestinationLng(marker.longitude)
+                        // console.log(marker.latitude + " " + marker.longitude)
                       }}
                     ></Marker>
                   </>

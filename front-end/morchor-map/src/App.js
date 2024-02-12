@@ -2,10 +2,10 @@ import "./styles.css";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import { MapCon } from "./Components/map/Map";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar } from "./Components/map/Navbar/Navbar";
 import { Faculty } from "./Components/map/Navbar/faculty/Faculty";
 import { Search } from "./Components/map/Navbar/searching/Search";
@@ -46,20 +46,27 @@ export default function App() {
 
   const [markerRef, marker] = useAdvancedMarkerRef();
 
-  navigator.geolocation.getCurrentPosition(showPosition);
   async function showPosition(po) {
     setLatitudeFromUser(po.coords.latitude);
     setLongitudeFromUser(po.coords.longitude);
-    // setOriginLat(po.coords.latitude);
-    // setOriginLng(po.coords.longitude);
+    setOriginLat(po.coords.latitude);
+    setOriginLng(po.coords.longitude);
     setFetched(true);
   }
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }, []);
 
   if (fetched) {
     let latitude = 0.0;
     let longitude = 0.0;
     let userOrLocation = "user";
-    if (latitudeFromLocation !== undefined && latitudeFromLocation !== "" && latitudeFromLocation !== NaN) {
+    if (
+      latitudeFromLocation !== undefined &&
+      latitudeFromLocation !== "" &&
+      latitudeFromLocation !== NaN
+    ) {
       latitude = parseFloat(latitudeFromLocation);
       longitude = parseFloat(longitudeFromLocation);
       userOrLocation = "location";
@@ -145,66 +152,69 @@ export default function App() {
                 setOriginLng={setOriginLng}
               />
             )}
-            {/* Search Result*/}
-            {approve && results && results.length > 0 && (
-              <Search
-                searchData={results}
-                setLatitudeFromLocation={setLatitudeFromLocation}
-                setLongitudeFromLocation={setLongitudeFromLocation}
-                setSubmit={setSubmit}
-                setOriginName={setOriginName}
-                setOriginLat={setOriginLat}
-                setOriginLng={setOriginLng}
-                setDestinationName={setDestinationName}
-                setDestinationLat={setDestinationLat}
-                setDestinationLng={setDestinationLng}
-                setOpenDirectionBar={setOpenDirectionBar}
-              />
-            )}
-            {/* Category Result */}
-            {(choose === "Faculty" || choose === "") && !approve && (
-              <Faculty
-                setChoose={setChoose}
-                setSelectFaculty={setSelectFaculty}
-                open={open}
-              />
-            )}
-            {/* Building Result */}
-            {!approve && choose === "Building" && (
-              <Building
-                setChoose={setChoose}
-                setSelectBuilding={setSelectBuilding}
-                selectFaculty={selectFaculty}
-                setLatitudeFromLocation={setLatitudeFromLocation}
-                setLongitudeFromLocation={setLongitudeFromLocation}
-                setSubmit={setSubmit}
-                open={open}
-                setOriginName={setOriginName}
-                setOriginLat={setOriginLat}
-                setOriginLng={setOriginLng}
-                setDestinationName={setDestinationName}
-                setDestinationLat={setDestinationLat}
-                setDestinationLng={setDestinationLng}
-                setOpenDirectionBar={setOpenDirectionBar}
-              />
-            )}
-            {/* Room Result */}
-            {!approve && choose === "Room" && (
-              <Room
-                selectBuilding={selectBuilding}
-                latitudeFromLocation={latitudeFromLocation}
-                longitudeFromLocation={longitudeFromLocation}
-                setSubmit={setSubmit}
-                open={open}
-                setOriginName={setOriginName}
-                setOriginLat={setOriginLat}
-                setOriginLng={setOriginLng}
-                setDestinationName={setDestinationName}
-                setDestinationLat={setDestinationLat}
-                setDestinationLng={setDestinationLng}
-                setOpenDirectionBar={setOpenDirectionBar}
-              />
-            )}
+            <div className="result-list">
+              {/* Search Result*/}
+              {approve && results && results.length > 0 && (
+                <Search
+                  searchData={results}
+                  setLatitudeFromLocation={setLatitudeFromLocation}
+                  setLongitudeFromLocation={setLongitudeFromLocation}
+                  setSubmit={setSubmit}
+                  setOriginName={setOriginName}
+                  setOriginLat={setOriginLat}
+                  setOriginLng={setOriginLng}
+                  setDestinationName={setDestinationName}
+                  setDestinationLat={setDestinationLat}
+                  setDestinationLng={setDestinationLng}
+                  setOpenDirectionBar={setOpenDirectionBar}
+                  open={open}
+                />
+              )}
+              {/* Category Result */}
+              {(choose === "Faculty" || choose === "") && !approve && (
+                <Faculty
+                  setChoose={setChoose}
+                  setSelectFaculty={setSelectFaculty}
+                  open={open}
+                />
+              )}
+              {/* Building Result */}
+              {!approve && choose === "Building" && (
+                <Building
+                  setChoose={setChoose}
+                  setSelectBuilding={setSelectBuilding}
+                  selectFaculty={selectFaculty}
+                  setLatitudeFromLocation={setLatitudeFromLocation}
+                  setLongitudeFromLocation={setLongitudeFromLocation}
+                  setSubmit={setSubmit}
+                  open={open}
+                  setOriginName={setOriginName}
+                  setOriginLat={setOriginLat}
+                  setOriginLng={setOriginLng}
+                  setDestinationName={setDestinationName}
+                  setDestinationLat={setDestinationLat}
+                  setDestinationLng={setDestinationLng}
+                  setOpenDirectionBar={setOpenDirectionBar}
+                />
+              )}
+              {/* Room Result */}
+              {!approve && choose === "Room" && (
+                <Room
+                  selectBuilding={selectBuilding}
+                  latitudeFromLocation={latitudeFromLocation}
+                  longitudeFromLocation={longitudeFromLocation}
+                  setSubmit={setSubmit}
+                  open={open}
+                  setOriginName={setOriginName}
+                  setOriginLat={setOriginLat}
+                  setOriginLng={setOriginLng}
+                  setDestinationName={setDestinationName}
+                  setDestinationLat={setDestinationLat}
+                  setDestinationLng={setDestinationLng}
+                  setOpenDirectionBar={setOpenDirectionBar}
+                />
+              )}
+            </div>
           </div>
         </div>
       </>

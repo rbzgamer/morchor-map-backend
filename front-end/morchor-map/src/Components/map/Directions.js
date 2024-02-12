@@ -8,6 +8,8 @@ export const Directions = ({firstLocation, secondLocation, useRoute, setUseRoute
   const [directionRenderer, setDirectionRenderer] = useState();
   const [route, setRoute] = useState();
 
+  // console.log(firstLocation.lat + " " + firstLocation.lng);
+
 
   useEffect(() => {
     if (firstLocation.lat === "" || firstLocation.lng === "" || firstLocation.lat === undefined || firstLocation.lng === undefined) {

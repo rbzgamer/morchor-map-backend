@@ -2,8 +2,8 @@
   max-width: 100%;
   position: absolute;
   right: 0px;
-  height: 100%;
-  overflow-y: scroll;
+  /* max-height: 50%; */
+  /* overflow-y: scroll; */
 }
 
 .input {
@@ -45,8 +45,8 @@ input:nth-child(1) {
   margin: 5px;
 }
 
-@media screen and (max-width: 450px) {
+/* @media screen and (max-width: 450px) {
   .formBlock {
     height: max-content;
   }
-}
+} */

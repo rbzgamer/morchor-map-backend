@@ -22,6 +22,7 @@ export const Search = ({
   setDestinationLat,
   setDestinationLng,
   setOpenDirectionBar,
+  open
 }) => {
   const [check, setChecked] = useState(true);
   const [search, setSearch] = useState([]);
@@ -154,5 +155,5 @@ export const Search = ({
       return <div>Loading...</div>;
     }
   };
-  return <>{showSearch()}</>;
+  return <>{open && showSearch()}</>;
 };

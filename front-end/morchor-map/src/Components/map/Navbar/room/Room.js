@@ -33,6 +33,8 @@ export const Room = ({
       redirect: "follow",
     };
 
+    // console.log(selectBuilding);
+
     fetch(
       "http://localhost:5000/api/locations/rooms/" + selectBuilding,
       requestOptions
