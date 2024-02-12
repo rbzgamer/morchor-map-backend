@@ -14,7 +14,12 @@ import { Room } from "./Components/map/Navbar/room/Room";
 import { Directions } from "./Components/map/Directions";
 import { DirectionBar } from "./Components/map/Navbar/DirectionBar";
 
-import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  useDirectionsService,
+} from "@vis.gl/react-google-maps";
 
 export default function App() {
   const [results, setResults] = useState([]);
@@ -38,6 +43,8 @@ export default function App() {
   const [destinationLat, setDestinationLat] = useState();
   const [destinationLng, setDestinationLng] = useState();
   const [useRoute, setUseRoute] = useState(false);
+
+  const [stateClickRoute, setStateClickRoute] = useState(false);
 
   async function showPosition(po) {
     setLatitudeFromUser(po.coords.latitude);
@@ -70,6 +77,8 @@ export default function App() {
 
     const position = { lat: latitude, lng: longitude };
 
+    // console.log(test + " " + useRoute);
+
     return (
       <>
         <div className="application">
@@ -100,7 +109,7 @@ export default function App() {
                   setDestinationLat={setDestinationLat}
                   setDestinationLng={setDestinationLng}
                 />
-                {useRoute && (
+                {
                   <Directions
                     firstLocation={{ lat: originLat, lng: originLng }}
                     secondLocation={{
@@ -109,8 +118,9 @@ export default function App() {
                     }}
                     useRoute={useRoute}
                     setUseRoute={setUseRoute}
+                    stateClickRoute={stateClickRoute}
                   />
-                )}
+                }
               </Map>
             </APIProvider>
           </div>
@@ -146,6 +156,8 @@ export default function App() {
                 longitudeFromUser={longitudeFromUser}
                 setOriginLat={setOriginLat}
                 setOriginLng={setOriginLng}
+                stateClickRoute={stateClickRoute}
+                setStateClickRoute={setStateClickRoute}
               />
             )}
             <div className="result-list">

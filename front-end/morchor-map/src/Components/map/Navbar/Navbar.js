@@ -55,10 +55,6 @@ export const Navbar = ({
     setDestinationName("Destination");
     setOriginLat(latitudeFromUser);
     setOriginLng(longitudeFromUser);
-
-    if (useRoute) {
-      window.location.reload(false);
-    }
   };
 
   const handleOpen = () => {
