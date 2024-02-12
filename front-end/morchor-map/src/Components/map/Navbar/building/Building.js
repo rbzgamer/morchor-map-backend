@@ -10,6 +10,7 @@ import Typography from "@mui/joy/Typography";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import { LinearProgress } from "@mui/material";
 
 export const Building = ({
   setChoose,
@@ -164,7 +165,7 @@ export const Building = ({
       });
       return <div>{listOrders}</div>;
     } else {
-      return;
+      return <LinearProgress/>;
     }
   };
 
