@@ -18,7 +18,7 @@ import {
   APIProvider,
   Map,
   AdvancedMarker,
-  MapCameraChangedEvent,
+  useMap,
 } from "@vis.gl/react-google-maps";
 
 export default function App() {
@@ -43,8 +43,8 @@ export default function App() {
   const [destinationLat, setDestinationLat] = useState();
   const [destinationLng, setDestinationLng] = useState();
   const [useRoute, setUseRoute] = useState(false);
-
   const [stateClickRoute, setStateClickRoute] = useState(false);
+  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
 
   async function showPosition(po) {
     setLatitudeFromUser(po.coords.latitude);
@@ -76,7 +76,7 @@ export default function App() {
       longitude = parseFloat(longitudeFromUser);
     }
 
-    const position = { lat: latitude, lng: longitude };
+    // const position = { lat: latitude, lng: longitude };
 
     // console.log(position);
 
@@ -86,11 +86,18 @@ export default function App() {
           {/* Base Map */}
           <div style={{ height: "100vh", width: "100%" }}>
             <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}>
-              <Map center={position} zoom={18} mapId="d024e2b838dd693a">
+              <Map
+                center={{ lat: latitudeFromUser, lng: longitudeFromUser }}
+                zoom={18}
+                mapId="d024e2b838dd693a"
+              >
                 <AdvancedMarker
                   position={{ lat: latitudeFromUser, lng: longitudeFromUser }}
                   onClick={() => {
-                    Swal.mixin({ toast: true }).fire({ title: "User Location", icon: "info" });
+                    Swal.mixin({ toast: true }).fire({
+                      title: "User Location",
+                      icon: "info",
+                    });
                   }}
                 >
                   <img
@@ -122,6 +129,7 @@ export default function App() {
                   useRoute={useRoute}
                   setUseRoute={setUseRoute}
                   stateClickRoute={stateClickRoute}
+                  setMap={setMap}
                 />
 
                 {useRoute && (
@@ -174,7 +182,9 @@ export default function App() {
               setOriginLat={setOriginLat}
               setOriginLng={setOriginLng}
               setLatitudeFromLocation={setLatitudeFromLocation}
+              map={map}
             />
+
             {/* Route Bar */}
             {openDirectionBar && (
               <DirectionBar
@@ -232,6 +242,7 @@ export default function App() {
                   setDestinationLat={setDestinationLat}
                   setDestinationLng={setDestinationLng}
                   setOpenDirectionBar={setOpenDirectionBar}
+                  map={map}
                 />
               )}
               {/* Room Result */}

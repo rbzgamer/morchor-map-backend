@@ -6,14 +6,13 @@ export const Directions = ({
   secondLocation,
   useRoute,
   setUseRoute,
-  stateClickRoute 
+  stateClickRoute ,
+  setMap
 }) => {
   const map = useMap();
   const routeLibrary = useMapsLibrary("routes");
   const [directionService, setDirectionService] = useState();
   const [directionRenderer, setDirectionRenderer] = useState();
-
-  // console.log(firstLocation.lat + " " + firstLocation.lng);
 
   useEffect(() => {
     if (
@@ -33,6 +32,7 @@ export const Directions = ({
     ) {
       setUseRoute(false);
     }
+    setMap(map)
   }, []);
 
   useEffect(() => {
@@ -65,12 +65,14 @@ export const Directions = ({
         .then((response) => {
           directionRenderer.setDirections(response);
           // directionRenderer.setMap(null)
+          map.panTo({lat: parseFloat(secondLocation.lat), lng: parseFloat(secondLocation.lng)})
         });
     } else {
       console.log(1);
       directionRenderer.setMap(null);
       setDirectionService(null);
       setDirectionRenderer(null);
+      map.panTo({lat: parseFloat(firstLocation.lat), lng: parseFloat(firstLocation.lng)})
     }
 
   }, [directionService, directionRenderer, useRoute, stateClickRoute]);

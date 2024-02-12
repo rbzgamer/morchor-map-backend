@@ -35,7 +35,8 @@ export const Navbar = ({
   longitudeFromUser,
   setOriginLat,
   setOriginLng,
-  setLatitudeFromLocation
+  setLatitudeFromLocation,
+  map,
 }) => {
   const [searchText, setSearchText] = useState("");
 
@@ -55,7 +56,8 @@ export const Navbar = ({
     setDestinationName("Destination");
     setOriginLat(latitudeFromUser);
     setOriginLng(longitudeFromUser);
-    setLatitudeFromLocation(latitudeFromUser)
+    setLatitudeFromLocation(latitudeFromUser);
+    map.panTo({lat: parseFloat(latitudeFromUser), lng: parseFloat(longitudeFromUser)})
   };
 
   const handleOpen = () => {
@@ -80,7 +82,12 @@ export const Navbar = ({
     <>
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", maxWidth: 510 }}
+        sx={{
+          p: "2px 4px",
+          display: "flex",
+          alignItems: "center",
+          maxWidth: 510,
+        }}
       >
         {choose !== "Faculty" && (
           <>

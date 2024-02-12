@@ -11,6 +11,7 @@ import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { LinearProgress } from "@mui/material";
+import { useMap } from "@vis.gl/react-google-maps";
 
 export const Building = ({
   setChoose,
@@ -27,6 +28,7 @@ export const Building = ({
   setDestinationLat,
   setDestinationLng,
   setOpenDirectionBar,
+  map
 }) => {
   const [check, setChecked] = useState(true);
   const [building, setFaculty] = useState([]);
@@ -70,6 +72,7 @@ export const Building = ({
     setSubmit(true);
     setLatitudeFromLocation(lat);
     setLongitudeFromLocation(lon);
+    map.panTo({lat: parseFloat(lat), lng: parseFloat(lon)})
   };
 
   const handleMouseMove = (input, lat, lon) => {
