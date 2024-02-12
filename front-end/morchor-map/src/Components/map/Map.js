@@ -1,6 +1,8 @@
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
 
+import Swal from 'sweetalert2'
+
 import { useEffect, useState } from "react";
 import { Marker } from "@vis.gl/react-google-maps";
 
@@ -61,6 +63,7 @@ export const MapCon = ({
                     <Marker
                       position={position}
                       onClick={() => {
+                        Swal.fire(marker.locationName);
                         setUseRoute(true)
                         setDestinationLat(marker.latitude)
                         setDestinationLng(marker.longitude)
@@ -85,7 +88,7 @@ export const MapCon = ({
                   <Marker
                     position={position}
                     onClick={() => {
-                      alert(marker.locationName);
+                      Swal.fire(marker.locationName);
                     }}
                   ></Marker>
                 </>
@@ -108,7 +111,7 @@ export const MapCon = ({
                     <Marker
                       position={position}
                       onClick={() => {
-                        alert(marker.locationName);
+                        Swal.fire(marker.locationName);
                       }}
                     ></Marker>
                   </>

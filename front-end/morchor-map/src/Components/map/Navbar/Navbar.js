@@ -42,6 +42,7 @@ export const Navbar = ({
   const handleSubmit = () => {
     if (searchText !== "") {
       setApprove(true);
+      setResults(searchText);
     }
   };
 
@@ -111,7 +112,6 @@ export const Navbar = ({
           value={searchText}
           onChange={(event) => {
             setSearchText(event.target.value);
-            setResults(searchText);
           }}
         />
         <IconButton

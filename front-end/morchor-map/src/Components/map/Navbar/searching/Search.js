@@ -21,9 +21,8 @@ export const Search = ({
   setDestinationName,
   setDestinationLat,
   setDestinationLng,
-  setOpenDirectionBar
+  setOpenDirectionBar,
 }) => {
-  // console.log("searchData: " + searchData.searchData );
   const [check, setChecked] = useState(true);
   const [search, setSearch] = useState([]);
   const [lat, setLat] = useState("");
@@ -63,15 +62,15 @@ export const Search = ({
   };
 
   const handleAddToOriginLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setOriginName(locationName[0])
+    setOpenDirectionBar(true);
+    setOriginName(locationName[0]);
     setOriginLat(lat);
     setOriginLng(lon);
   };
 
   const handleAddToDestinationLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setDestinationName(locationName[0])
+    setOpenDirectionBar(true);
+    setDestinationName(locationName[0]);
     setDestinationLat(lat);
     setDestinationLng(lon);
   };
@@ -79,6 +78,8 @@ export const Search = ({
   const showSearch = () => {
     if (!check) {
       const listOrders = search.map((object) => {
+        const room = object.room.filter((x) => x.includes(searchData));
+
         return (
           <>
             <Card
@@ -106,7 +107,7 @@ export const Search = ({
                   Name: {object.locationName}
                 </Typography>
                 <Typography level="title-lg" id="card-description">
-                  Room: {object.room}
+                  {room.length !== 0 && <>Room: {room.map((x) => x + " / ")}</>}
                 </Typography>
                 <Typography
                   level="body-sm"

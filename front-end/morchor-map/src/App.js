@@ -2,8 +2,10 @@ import "./styles.css";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
 
+import Swal from 'sweetalert2'
+
 import { MapCon } from "./Components/map/Map";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Navbar } from "./Components/map/Navbar/Navbar";
 import { Faculty } from "./Components/map/Navbar/faculty/Faculty";
 import { Search } from "./Components/map/Navbar/searching/Search";
@@ -11,13 +13,6 @@ import { Building } from "./Components/map/Navbar/building/Building";
 import { Room } from "./Components/map/Navbar/room/Room";
 import { Directions } from "./Components/map/Directions";
 import { DirectionBar } from "./Components/map/Navbar/DirectionBar";
-
-// import SendIcon from "@mui/icons-material/Send";
-// import AspectRatio from "@mui/joy/AspectRatio";
-// import Card from "@mui/joy/Card";
-// import CardContent from "@mui/joy/CardContent";
-// import Typography from "@mui/joy/Typography";
-// import { IconButton } from "@mui/material";
 
 import {
   APIProvider,
@@ -64,7 +59,7 @@ export default function App() {
     let latitude = 0.0;
     let longitude = 0.0;
     let userOrLocation = "user";
-    if (latitudeFromLocation !== undefined) {
+    if (latitudeFromLocation !== undefined && latitudeFromLocation !== "" && latitudeFromLocation !== NaN) {
       latitude = parseFloat(latitudeFromLocation);
       longitude = parseFloat(longitudeFromLocation);
       userOrLocation = "location";
@@ -87,7 +82,7 @@ export default function App() {
                 <Marker
                   position={{ lat: latitudeFromUser, lng: longitudeFromUser }}
                   onClick={() => {
-                    alert("User Location");
+                    Swal.fire("User Location");
                   }}
                 ></Marker>
 
@@ -114,6 +109,7 @@ export default function App() {
                 )}
               </Map>
             </APIProvider>
+            {/* <img src="https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg" /> */}
           </div>
           <div className="formBlock">
             {/* Navbar */}

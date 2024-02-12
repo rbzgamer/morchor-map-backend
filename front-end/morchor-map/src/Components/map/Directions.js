@@ -51,7 +51,7 @@ export const Directions = ({firstLocation, secondLocation, useRoute, setUseRoute
         .then((response) => {
           directionRenderer.setDirections(response);
           setRoute(response.routes);
-          console.log(response);
+          // console.log(response);
         });
     }
   }, [directionService, directionRenderer]);
