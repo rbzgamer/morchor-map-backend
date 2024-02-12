@@ -65,7 +65,7 @@ export default function App() {
     if (
       latitudeFromLocation !== undefined &&
       latitudeFromLocation !== "" &&
-      latitudeFromLocation !== NaN
+      latitudeFromLocation !== NaN && latitudeFromLocation !== latitudeFromUser
     ) {
       latitude = parseFloat(latitudeFromLocation);
       longitude = parseFloat(longitudeFromLocation);
@@ -77,7 +77,7 @@ export default function App() {
 
     const position = { lat: latitude, lng: longitude };
 
-    // console.log(test + " " + useRoute);
+    // console.log(position);
 
     return (
       <>
@@ -172,7 +172,7 @@ export default function App() {
               longitudeFromUser={longitudeFromUser}
               setOriginLat={setOriginLat}
               setOriginLng={setOriginLng}
-              useRoute={useRoute}
+              setLatitudeFromLocation={setLatitudeFromLocation}
             />
             {/* Route Bar */}
             {openDirectionBar && (

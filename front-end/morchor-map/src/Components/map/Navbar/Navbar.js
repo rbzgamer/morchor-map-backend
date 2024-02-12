@@ -35,7 +35,7 @@ export const Navbar = ({
   longitudeFromUser,
   setOriginLat,
   setOriginLng,
-  useRoute,
+  setLatitudeFromLocation
 }) => {
   const [searchText, setSearchText] = useState("");
 
@@ -55,6 +55,7 @@ export const Navbar = ({
     setDestinationName("Destination");
     setOriginLat(latitudeFromUser);
     setOriginLng(longitudeFromUser);
+    setLatitudeFromLocation(latitudeFromUser)
   };
 
   const handleOpen = () => {
