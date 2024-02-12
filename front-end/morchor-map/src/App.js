@@ -16,9 +16,8 @@ import { DirectionBar } from "./Components/map/Navbar/DirectionBar";
 
 import {
   APIProvider,
-  useAdvancedMarkerRef,
   Map,
-  Marker,
+  AdvancedMarker,
 } from "@vis.gl/react-google-maps";
 
 export default function App() {
@@ -43,8 +42,6 @@ export default function App() {
   const [destinationLat, setDestinationLat] = useState();
   const [destinationLng, setDestinationLng] = useState();
   const [useRoute, setUseRoute] = useState(false);
-
-  const [markerRef, marker] = useAdvancedMarkerRef();
 
   async function showPosition(po) {
     setLatitudeFromUser(po.coords.latitude);
@@ -77,21 +74,25 @@ export default function App() {
 
     const position = { lat: latitude, lng: longitude };
 
-    // console.log(originLat + " " + originLng);
-
     return (
       <>
         <div className="application">
           {/* Base Map */}
           <div style={{ height: "100vh", width: "100%" }}>
-            <APIProvider apiKey="AIzaSyC4hElrEUcoCj-GAu6Y6qtfh2xOq4iZf9E">
+            <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}>
               <Map center={position} zoom={18} mapId="d024e2b838dd693a">
-                <Marker
+                <AdvancedMarker
                   position={{ lat: latitudeFromUser, lng: longitudeFromUser }}
                   onClick={() => {
-                    Swal.fire("User Location");
+                    Swal.fire({ title: "User Location", icon: "info" });
                   }}
-                ></Marker>
+                >
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/800/800724.png"
+                    width={50}
+                    height={50}
+                  />
+                </AdvancedMarker>
 
                 <MapCon
                   latitude={latitude}
@@ -116,7 +117,6 @@ export default function App() {
                 )}
               </Map>
             </APIProvider>
-            {/* <img src="https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg" /> */}
           </div>
           <div className="formBlock">
             {/* Navbar */}

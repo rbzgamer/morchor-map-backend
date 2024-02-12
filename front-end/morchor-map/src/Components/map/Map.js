@@ -1,10 +1,10 @@
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import { useEffect, useState } from "react";
-import { Marker } from "@vis.gl/react-google-maps";
+import { AdvancedMarker } from "@vis.gl/react-google-maps";
 
 export const MapCon = ({
   latitude,
@@ -18,7 +18,6 @@ export const MapCon = ({
 }) => {
   const [location, setLocation] = useState([]);
   const [check, setChecked] = useState([]);
-
 
   const loadBuilding = async () => {
     var requestOptions = {
@@ -60,16 +59,33 @@ export const MapCon = ({
                 };
                 return (
                   <>
-                    <Marker
+                    <AdvancedMarker
                       position={position}
                       onClick={() => {
-                        Swal.fire(marker.locationName);
-                        setUseRoute(true)
-                        setDestinationLat(marker.latitude)
-                        setDestinationLng(marker.longitude)
-                        // console.log(marker.latitude + " " + marker.longitude)
+                        Swal.fire({
+                          title: marker.locationName,
+                          text: "Do you want to go to location?",
+                          icon: "info",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Yes, go to location",
+                        }).then((result) => {
+                          /* Read more about isConfirmed, isDenied below */
+                          if (result.isConfirmed) {
+                            setUseRoute(true);
+                            setDestinationLat(marker.latitude);
+                            setDestinationLng(marker.longitude);
+                          }
+                        });
                       }}
-                    ></Marker>
+                    >
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Location_icon_from_Noun_Project.png/640px-Location_icon_from_Noun_Project.png"
+                        width={50}
+                        height={50}
+                      />
+                    </AdvancedMarker>
                   </>
                 );
               }
@@ -86,12 +102,18 @@ export const MapCon = ({
               };
               return (
                 <>
-                  <Marker
+                  <AdvancedMarker
                     position={position}
                     onClick={() => {
-                      Swal.fire(marker.locationName);
+                      Swal.fire({ title: marker.locationName, icon: "info" });
                     }}
-                  ></Marker>
+                  >
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Location_icon_from_Noun_Project.png/640px-Location_icon_from_Noun_Project.png"
+                      width={50}
+                      height={50}
+                    />
+                  </AdvancedMarker>
                 </>
               );
             })}
@@ -109,12 +131,18 @@ export const MapCon = ({
                 };
                 return (
                   <>
-                    <Marker
+                    <AdvancedMarker
                       position={position}
                       onClick={() => {
-                        Swal.fire(marker.locationName);
+                        Swal.fire({ title: marker.locationName, icon: "info" });
                       }}
-                    ></Marker>
+                    >
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Location_icon_from_Noun_Project.png/640px-Location_icon_from_Noun_Project.png"
+                        width={50}
+                        height={50}
+                      />
+                    </AdvancedMarker>
                   </>
                 );
               })}
