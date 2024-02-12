@@ -62,7 +62,7 @@ export const MapCon = ({
                     <AdvancedMarker
                       position={position}
                       onClick={() => {
-                        Swal.fire({
+                        Swal.mixin({ toast: true }).fire({
                           title: marker.locationName,
                           text: "Do you want to go to location?",
                           icon: "info",
@@ -105,7 +105,7 @@ export const MapCon = ({
                   <AdvancedMarker
                     position={position}
                     onClick={() => {
-                      Swal.fire({ title: marker.locationName, icon: "info" });
+                      Swal.mixin({ toast: true }).fire({ title: marker.locationName, icon: "info" });
                     }}
                   >
                     <img
@@ -134,7 +134,7 @@ export const MapCon = ({
                     <AdvancedMarker
                       position={position}
                       onClick={() => {
-                        Swal.fire({ title: marker.locationName, icon: "info" });
+                        Swal.mixin({ toast: true }).fire({ title: marker.locationName, icon: "info" });
                       }}
                     >
                       <img

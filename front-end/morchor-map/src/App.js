@@ -18,7 +18,7 @@ import {
   APIProvider,
   Map,
   AdvancedMarker,
-  useDirectionsService,
+  MapCameraChangedEvent,
 } from "@vis.gl/react-google-maps";
 
 export default function App() {
@@ -65,7 +65,8 @@ export default function App() {
     if (
       latitudeFromLocation !== undefined &&
       latitudeFromLocation !== "" &&
-      latitudeFromLocation !== NaN && latitudeFromLocation !== latitudeFromUser
+      latitudeFromLocation !== NaN &&
+      latitudeFromLocation !== latitudeFromUser
     ) {
       latitude = parseFloat(latitudeFromLocation);
       longitude = parseFloat(longitudeFromLocation);
@@ -89,7 +90,7 @@ export default function App() {
                 <AdvancedMarker
                   position={{ lat: latitudeFromUser, lng: longitudeFromUser }}
                   onClick={() => {
-                    Swal.fire({ title: "User Location", icon: "info" });
+                    Swal.mixin({ toast: true }).fire({ title: "User Location", icon: "info" });
                   }}
                 >
                   <img
