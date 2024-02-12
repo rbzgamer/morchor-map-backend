@@ -78,7 +78,7 @@ export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
             variant="outlined"
             orientation="horizontal"
             sx={{
-              width: 510,
+              maxWidth: 510,
               "&:hover": {
                 boxShadow: "md",
                 borderColor: "neutral.outlinedHoverBorder",

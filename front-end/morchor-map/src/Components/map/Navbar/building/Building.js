@@ -25,7 +25,7 @@ export const Building = ({
   setDestinationName,
   setDestinationLat,
   setDestinationLng,
-  setOpenDirectionBar
+  setOpenDirectionBar,
 }) => {
   const [check, setChecked] = useState(true);
   const [building, setFaculty] = useState([]);
@@ -76,15 +76,15 @@ export const Building = ({
   };
 
   const handleAddToOriginLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setOriginName(locationName[0])
+    setOpenDirectionBar(true);
+    setOriginName(locationName[0]);
     setOriginLat(lat);
     setOriginLng(lon);
   };
 
   const handleAddToDestinationLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setDestinationName(locationName[0])
+    setOpenDirectionBar(true);
+    setDestinationName(locationName[0]);
     setDestinationLat(lat);
     setDestinationLng(lon);
   };
@@ -97,7 +97,7 @@ export const Building = ({
             variant="outlined"
             orientation="horizontal"
             sx={{
-              width: 510,
+              maxWidth: 510,
               "&:hover": {
                 boxShadow: "md",
                 borderColor: "neutral.outlinedHoverBorder",
@@ -116,7 +116,9 @@ export const Building = ({
             </AspectRatio>
             <CardContent onClick={handleClickToRoom}>
               <Typography level="title-lg" id="card-description">
-                {object.locationName.map((x) => {return(x + " / ")})}
+                {object.locationName.map((x) => {
+                  return x + " / ";
+                })}
               </Typography>
               <Typography
                 level="body-sm"
@@ -148,7 +150,9 @@ export const Building = ({
               sx={{ p: "1px" }}
               aria-label="directions"
               style={{ right: "0px" }}
-              onClick={() => {handleAddToDestinationLocation(object.locationName)}}
+              onClick={() => {
+                handleAddToDestinationLocation(object.locationName);
+              }}
             >
               <AssistantDirectionIcon />
             </IconButton>
@@ -157,7 +161,7 @@ export const Building = ({
       });
       return <div>{listOrders}</div>;
     } else {
-      return <div>Loading...</div>;
+      return;
     }
   };
 

@@ -16,7 +16,7 @@ export const DirectionBar = ({originName, destinationName, setUseRoute, latitude
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
+          "& > :not(style)": { m: 1, maxWidth: 510 },
           mt: "10px", mb: "10px"
         }}
         noValidate
