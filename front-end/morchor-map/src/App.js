@@ -99,28 +99,56 @@ export default function App() {
                   />
                 </AdvancedMarker>
 
-                <MapCon
-                  latitude={latitude}
-                  longitude={longitude}
-                  userOrLocation={userOrLocation}
-                  submit={submit}
-                  selectFaculty={selectFaculty}
-                  setUseRoute={setUseRoute}
-                  setDestinationLat={setDestinationLat}
-                  setDestinationLng={setDestinationLng}
-                />
-                {
-                  <Directions
-                    firstLocation={{ lat: originLat, lng: originLng }}
-                    secondLocation={{
-                      lat: destinationLat,
-                      lng: destinationLng,
-                    }}
-                    useRoute={useRoute}
+                {!useRoute && (
+                  <MapCon
+                    latitude={latitude}
+                    longitude={longitude}
+                    userOrLocation={userOrLocation}
+                    submit={submit}
+                    selectFaculty={selectFaculty}
                     setUseRoute={setUseRoute}
-                    stateClickRoute={stateClickRoute}
+                    setDestinationLat={setDestinationLat}
+                    setDestinationLng={setDestinationLng}
                   />
-                }
+                )}
+
+                <Directions
+                  firstLocation={{ lat: originLat, lng: originLng }}
+                  secondLocation={{
+                    lat: destinationLat,
+                    lng: destinationLng,
+                  }}
+                  useRoute={useRoute}
+                  setUseRoute={setUseRoute}
+                  stateClickRoute={stateClickRoute}
+                />
+
+                {useRoute && (
+                  <AdvancedMarker
+                    position={{
+                      lat: parseFloat(originLat),
+                      lng: parseFloat(originLng),
+                    }}
+                    onClick={() => {
+                      Swal.fire({ title: "Origin Location", icon: "info" });
+                    }}
+                  />
+                )}
+
+                {useRoute && (
+                  <AdvancedMarker
+                    position={{
+                      lat: parseFloat(destinationLat),
+                      lng: parseFloat(destinationLng),
+                    }}
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Destination Location",
+                        icon: "info",
+                      });
+                    }}
+                  />
+                )}
               </Map>
             </APIProvider>
           </div>
