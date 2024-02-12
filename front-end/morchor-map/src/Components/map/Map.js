@@ -81,7 +81,7 @@ export const MapCon = ({
                       }}
                     >
                       <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Location_icon_from_Noun_Project.png/640px-Location_icon_from_Noun_Project.png"
+                        src="https://cdn-icons-png.flaticon.com/512/8/8214.png"
                         width={50}
                         height={50}
                       />
@@ -109,7 +109,7 @@ export const MapCon = ({
                     }}
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Location_icon_from_Noun_Project.png/640px-Location_icon_from_Noun_Project.png"
+                      src="https://cdn-icons-png.flaticon.com/512/8/8214.png"
                       width={50}
                       height={50}
                     />
@@ -138,7 +138,7 @@ export const MapCon = ({
                       }}
                     >
                       <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Location_icon_from_Noun_Project.png/640px-Location_icon_from_Noun_Project.png"
+                        src="https://cdn-icons-png.flaticon.com/512/8/8214.png"
                         width={50}
                         height={50}
                       />
