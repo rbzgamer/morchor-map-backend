@@ -35,13 +35,15 @@ export const Navbar = ({
   longitudeFromUser,
   setOriginLat,
   setOriginLng,
-  useRoute,
+  setLatitudeFromLocation,
+  map,
 }) => {
   const [searchText, setSearchText] = useState("");
 
   const handleSubmit = () => {
     if (searchText !== "") {
       setApprove(true);
+      setResults(searchText);
     }
   };
 
@@ -54,10 +56,8 @@ export const Navbar = ({
     setDestinationName("Destination");
     setOriginLat(latitudeFromUser);
     setOriginLng(longitudeFromUser);
-
-    if (useRoute) {
-      window.location.reload(false);
-    }
+    setLatitudeFromLocation(latitudeFromUser);
+    map.panTo({lat: parseFloat(latitudeFromUser), lng: parseFloat(longitudeFromUser)})
   };
 
   const handleOpen = () => {
@@ -82,7 +82,12 @@ export const Navbar = ({
     <>
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 510 }}
+        sx={{
+          p: "2px 4px",
+          display: "flex",
+          alignItems: "center",
+          maxWidth: 510,
+        }}
       >
         {choose !== "Faculty" && (
           <>
@@ -111,7 +116,6 @@ export const Navbar = ({
           value={searchText}
           onChange={(event) => {
             setSearchText(event.target.value);
-            setResults(searchText);
           }}
         />
         <IconButton

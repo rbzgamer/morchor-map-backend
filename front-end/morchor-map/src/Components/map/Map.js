@@ -1,12 +1,10 @@
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
 
-// import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import L from "leaflet";
-import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
-import Routing from "../functions/Routing";
-import { Marker } from "@vis.gl/react-google-maps";
+import { useEffect, useState } from "react";
+import { AdvancedMarker } from "@vis.gl/react-google-maps";
 
 export const MapCon = ({
   latitude,
@@ -20,11 +18,6 @@ export const MapCon = ({
 }) => {
   const [location, setLocation] = useState([]);
   const [check, setChecked] = useState([]);
-
-  const icon = L.icon({
-    iconUrl: "../../img/location-pin.png",
-    iconSize: [38, 38],
-  });
 
   const loadBuilding = async () => {
     var requestOptions = {
@@ -53,7 +46,6 @@ export const MapCon = ({
         latitude !== "" &&
         longitude !== ""
       ) {
-        console.log(1);
         return (
           <>
             {location.map((marker) => {
@@ -67,14 +59,33 @@ export const MapCon = ({
                 };
                 return (
                   <>
-                    <Marker
+                    <AdvancedMarker
                       position={position}
                       onClick={() => {
-                        setUseRoute(true)
-                        setDestinationLat(marker.latitude)
-                        setDestinationLng(marker.longitude)
+                        Swal.mixin({ toast: true }).fire({
+                          title: marker.locationName,
+                          text: "Do you want to go to location?",
+                          icon: "info",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Yes, go to location",
+                        }).then((result) => {
+                          /* Read more about isConfirmed, isDenied below */
+                          if (result.isConfirmed) {
+                            setUseRoute(true);
+                            setDestinationLat(marker.latitude);
+                            setDestinationLng(marker.longitude);
+                          }
+                        });
                       }}
-                    ></Marker>
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/8/8214.png"
+                        width={50}
+                        height={50}
+                      />
+                    </AdvancedMarker>
                   </>
                 );
               }
@@ -82,7 +93,6 @@ export const MapCon = ({
           </>
         );
       } else if (selectFaculty === "") {
-        console.log(2);
         return (
           <>
             {location.map((marker) => {
@@ -92,30 +102,24 @@ export const MapCon = ({
               };
               return (
                 <>
-                  <Marker
+                  <AdvancedMarker
                     position={position}
                     onClick={() => {
-                      // setUseRoute(true)
-                      // setDestinationLat(marker.latitude)
-                      // setDestinationLng(marker.longitude)
-                      alert(marker.locationName);
+                      Swal.mixin({ toast: true }).fire({ title: marker.locationName, icon: "info" });
                     }}
-                  ></Marker>
-                  {/* {open && (
-                    <InfoWindow
-                      position={position}
-                      onCloseClick={() => setOpen(false)}
-                    >
-                      <h2>{marker.locationName}</h2>
-                    </InfoWindow>
-                  )} */}
+                  >
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/8/8214.png"
+                      width={50}
+                      height={50}
+                    />
+                  </AdvancedMarker>
                 </>
               );
             })}
           </>
         );
       } else {
-        console.log(3);
         return (
           <>
             {location
@@ -127,20 +131,18 @@ export const MapCon = ({
                 };
                 return (
                   <>
-                    <Marker
+                    <AdvancedMarker
                       position={position}
                       onClick={() => {
-                        alert(marker.locationName);
+                        Swal.mixin({ toast: true }).fire({ title: marker.locationName, icon: "info" });
                       }}
-                    ></Marker>
-                    {/* {open && (
-                      <InfoWindow
-                        position={position}
-                        onCloseClick={() => setOpen(false)}
-                      >
-                        <h2>{marker.locationName}</h2>
-                      </InfoWindow>
-                    )} */}
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/8/8214.png"
+                        width={50}
+                        height={50}
+                      />
+                    </AdvancedMarker>
                   </>
                 );
               })}
@@ -153,37 +155,6 @@ export const MapCon = ({
   useEffect(() => {
     showAllLocation();
   }, [latitude, longitude, userOrLocation, submit, selectFaculty]);
-
-  // const render = (latitude, longitude) => {
-  //   const { selectPosition } = [latitude, longitude];
-
-  //   return (
-  //     <MapContainer center={[latitude, longitude]} zoom={16}>
-  //       <TileLayer
-  //         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-  //         attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  //       />
-
-  //       {showAllLocation()}
-
-  //       <Marker position={[latitude, longitude]} icon={icon}>
-  //         <Popup>User Location</Popup>
-  //       </Marker>
-
-  //       {/* {directions && <DirectionsRenderer directions={directions} />} */}
-  //       {/* <Directions directions={directions} /> */}
-
-  //       <Routing/>
-
-  //       <Marker position={[18.7956489, 98.952533]} icon={icon}>
-  //         <Popup>Start Location</Popup>
-  //       </Marker>
-  //       <Marker position={[18.7964371, 98.95319780000001]} icon={icon}>
-  //         <Popup>End Location</Popup>
-  //       </Marker>
-  //     </MapContainer>
-  //   );
-  // };
 
   return <>{showAllLocation()}</>;
 };

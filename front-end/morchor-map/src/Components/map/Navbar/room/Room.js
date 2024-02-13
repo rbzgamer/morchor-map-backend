@@ -9,6 +9,7 @@ import { IconButton } from "@mui/material";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import { LinearProgress } from "@mui/material";
 
 export const Room = ({
   selectBuilding,
@@ -32,6 +33,8 @@ export const Room = ({
       method: "GET",
       redirect: "follow",
     };
+
+    // console.log(selectBuilding);
 
     fetch(
       "http://localhost:5000/api/locations/rooms/" + selectBuilding,
@@ -76,7 +79,7 @@ export const Room = ({
               variant="outlined"
               orientation="horizontal"
               sx={{
-                width: 510,
+                maxWidth: 510,
                 "&:hover": {
                   boxShadow: "md",
                   borderColor: "neutral.outlinedHoverBorder",
@@ -132,7 +135,7 @@ export const Room = ({
       });
       return <div>{listOrders}</div>;
     } else {
-      return <div>Loading...</div>;
+      return <LinearProgress/>;
     }
   };
 

@@ -1,7 +1,7 @@
 import { Box, IconButton, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-export const DirectionBar = ({originName, destinationName, setUseRoute, latitudeFromUser, longitudeFromUser, setOriginLat, setOriginLng}) => {
+export const DirectionBar = ({originName, destinationName, setUseRoute, latitudeFromUser, longitudeFromUser, setOriginLat, setOriginLng, stateClickRoute, setStateClickRoute}) => {
 
   const handleSubmit = () => {
     if (originName === "User Location") {
@@ -9,14 +9,15 @@ export const DirectionBar = ({originName, destinationName, setUseRoute, latitude
       setOriginLng(longitudeFromUser)
     }
     setUseRoute(true)
+    setStateClickRoute(!stateClickRoute)
   }
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", backgroundColor: "white"}}>
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
+          "& > :not(style)": { m: 1, maxWidth: 510 },
           mt: "10px", mb: "10px"
         }}
         noValidate

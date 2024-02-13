@@ -9,6 +9,7 @@ import { IconButton } from "@mui/material";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import { LinearProgress } from "@mui/material";
 
 export const Search = ({
   searchData,
@@ -21,9 +22,9 @@ export const Search = ({
   setDestinationName,
   setDestinationLat,
   setDestinationLng,
-  setOpenDirectionBar
+  setOpenDirectionBar,
+  open
 }) => {
-  // console.log("searchData: " + searchData.searchData );
   const [check, setChecked] = useState(true);
   const [search, setSearch] = useState([]);
   const [lat, setLat] = useState("");
@@ -48,8 +49,9 @@ export const Search = ({
   };
 
   useEffect(() => {
+    setChecked(true);
     loadSearch();
-  }, []);
+  }, [searchData]);
 
   const handleSubmit = async () => {
     setLatitudeFromLocation(lat);
@@ -63,15 +65,15 @@ export const Search = ({
   };
 
   const handleAddToOriginLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setOriginName(locationName[0])
+    setOpenDirectionBar(true);
+    setOriginName(locationName[0]);
     setOriginLat(lat);
     setOriginLng(lon);
   };
 
   const handleAddToDestinationLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setDestinationName(locationName[0])
+    setOpenDirectionBar(true);
+    setDestinationName(locationName[0]);
     setDestinationLat(lat);
     setDestinationLng(lon);
   };
@@ -79,13 +81,15 @@ export const Search = ({
   const showSearch = () => {
     if (!check) {
       const listOrders = search.map((object) => {
+        const room = object.room.filter((x) => x.includes(searchData));
+
         return (
           <>
             <Card
               variant="outlined"
               orientation="horizontal"
               sx={{
-                width: 510,
+                maxWidth: 510,
                 "&:hover": {
                   boxShadow: "md",
                   borderColor: "neutral.outlinedHoverBorder",
@@ -106,7 +110,7 @@ export const Search = ({
                   Name: {object.locationName}
                 </Typography>
                 <Typography level="title-lg" id="card-description">
-                  Room: {object.room}
+                  {room.length !== 0 && <>Room: {room.map((x) => x + " / ")}</>}
                 </Typography>
                 <Typography
                   level="body-sm"
@@ -150,8 +154,8 @@ export const Search = ({
       });
       return <div>{listOrders}</div>;
     } else {
-      return <div>Loading...</div>;
+      return <LinearProgress/>;
     }
   };
-  return <>{showSearch()}</>;
+  return <>{open && showSearch()}</>;
 };

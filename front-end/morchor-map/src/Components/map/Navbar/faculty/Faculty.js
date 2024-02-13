@@ -8,7 +8,7 @@ import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
-import { IconButton } from "@mui/material";
+import { LinearProgress } from "@mui/material";
 
 export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
   const [select, setSelect] = useState("");
@@ -78,7 +78,7 @@ export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
             variant="outlined"
             orientation="horizontal"
             sx={{
-              width: 510,
+              maxWidth: 510,
               "&:hover": {
                 boxShadow: "md",
                 borderColor: "neutral.outlinedHoverBorder",
@@ -105,7 +105,7 @@ export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
       });
       return <div>{listOrders}</div>;
     } else {
-      return <div>Loading...</div>;
+      return <LinearProgress/>;
     }
   };
 

@@ -1,7 +1,7 @@
 import "./Building.css";
 import { useEffect, useState } from "react";
 
-import { IconButton, Divider } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";
@@ -10,6 +10,8 @@ import Typography from "@mui/joy/Typography";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import { LinearProgress } from "@mui/material";
+import { useMap } from "@vis.gl/react-google-maps";
 
 export const Building = ({
   setChoose,
@@ -25,7 +27,8 @@ export const Building = ({
   setDestinationName,
   setDestinationLat,
   setDestinationLng,
-  setOpenDirectionBar
+  setOpenDirectionBar,
+  map
 }) => {
   const [check, setChecked] = useState(true);
   const [building, setFaculty] = useState([]);
@@ -57,16 +60,19 @@ export const Building = ({
   }, []);
 
   const handleClickToRoom = async () => {
-    setLatitudeFromLocation(lat);
-    setLongitudeFromLocation(lon);
-    setSelectBuilding(select);
-    setChoose("Room");
+    if (select !== "") {
+      setLatitudeFromLocation(lat);
+      setLongitudeFromLocation(lon);
+      setSelectBuilding(select);
+      setChoose("Room");
+    }
   };
 
   const handleSubmit = async () => {
     setSubmit(true);
     setLatitudeFromLocation(lat);
     setLongitudeFromLocation(lon);
+    map.panTo({lat: parseFloat(lat), lng: parseFloat(lon)})
   };
 
   const handleMouseMove = (input, lat, lon) => {
@@ -76,28 +82,29 @@ export const Building = ({
   };
 
   const handleAddToOriginLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setOriginName(locationName[0])
+    setOpenDirectionBar(true);
+    setOriginName(locationName[0]);
     setOriginLat(lat);
     setOriginLng(lon);
   };
 
   const handleAddToDestinationLocation = (locationName) => {
-    setOpenDirectionBar(true)
-    setDestinationName(locationName[0])
+    setOpenDirectionBar(true);
+    setDestinationName(locationName[0]);
     setDestinationLat(lat);
     setDestinationLng(lon);
   };
 
   const showBuilding = () => {
     if (!check) {
+      let height = window.innerHeight;
       const listOrders = building.map((object) => {
         return (
           <Card
             variant="outlined"
             orientation="horizontal"
             sx={{
-              width: 510,
+              maxWidth: 510,
               "&:hover": {
                 boxShadow: "md",
                 borderColor: "neutral.outlinedHoverBorder",
@@ -116,7 +123,9 @@ export const Building = ({
             </AspectRatio>
             <CardContent onClick={handleClickToRoom}>
               <Typography level="title-lg" id="card-description">
-                {object.locationName.map((x) => {return(x + " / ")})}
+                {object.locationName.map((x) => {
+                  return x + " / ";
+                })}
               </Typography>
               <Typography
                 level="body-sm"
@@ -148,7 +157,9 @@ export const Building = ({
               sx={{ p: "1px" }}
               aria-label="directions"
               style={{ right: "0px" }}
-              onClick={() => {handleAddToDestinationLocation(object.locationName)}}
+              onClick={() => {
+                handleAddToDestinationLocation(object.locationName);
+              }}
             >
               <AssistantDirectionIcon />
             </IconButton>
@@ -157,7 +168,7 @@ export const Building = ({
       });
       return <div>{listOrders}</div>;
     } else {
-      return <div>Loading...</div>;
+      return <LinearProgress/>;
     }
   };
 

@@ -14,3 +14,15 @@
   overflow-y: auto;
   margin-top: 10px;
 }
+
+.result-list {
+  width: 100%;
+  max-height: 83vh;
+  overflow-y: scroll;
+}
+
+@media screen and (max-width: 450px) {
+  .result-list {
+    max-height: 80vh;
+  }
+}
