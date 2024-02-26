@@ -6,13 +6,16 @@ export const Directions = ({
   secondLocation,
   useRoute,
   setUseRoute,
-  stateClickRoute ,
-  setMap
+  stateClickRoute,
+  setMap,
+  setDistance,
+  setDuration,
 }) => {
   const map = useMap();
   const routeLibrary = useMapsLibrary("routes");
   const [directionService, setDirectionService] = useState();
   const [directionRenderer, setDirectionRenderer] = useState();
+  const [route, setRoute] = useState([]);
 
   useEffect(() => {
     if (
@@ -32,7 +35,7 @@ export const Directions = ({
     ) {
       setUseRoute(false);
     }
-    setMap(map)
+    setMap(map);
   }, []);
 
   useEffect(() => {
@@ -64,17 +67,29 @@ export const Directions = ({
         })
         .then((response) => {
           directionRenderer.setDirections(response);
-          // directionRenderer.setMap(null)
-          map.panTo({lat: parseFloat(secondLocation.lat), lng: parseFloat(secondLocation.lng)})
+          setRoute(response.routes);
+          map.panTo({
+            lat: parseFloat(secondLocation.lat),
+            lng: parseFloat(secondLocation.lng),
+          });
+
+
+          if (route[0].legs !== undefined) {
+            setDistance(route[0].legs[0].distance.text);
+            setDuration(route[0].legs[0].duration.text);
+            console.log(route[0].legs[0].distance);
+            console.log(route[0].legs[0].duration);
+          }
         });
     } else {
-      console.log(1);
       directionRenderer.setMap(null);
       setDirectionService(null);
       setDirectionRenderer(null);
-      map.panTo({lat: parseFloat(firstLocation.lat), lng: parseFloat(firstLocation.lng)})
+      map.panTo({
+        lat: parseFloat(firstLocation.lat),
+        lng: parseFloat(firstLocation.lng),
+      });
     }
-
   }, [directionService, directionRenderer, useRoute, stateClickRoute]);
 
   return null;

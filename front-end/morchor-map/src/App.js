@@ -13,6 +13,7 @@ import { Building } from "./Components/map/Navbar/building/Building";
 import { Room } from "./Components/map/Navbar/room/Room";
 import { Directions } from "./Components/map/Directions";
 import { DirectionBar } from "./Components/map/Navbar/DirectionBar";
+import { ShowDirectionInfo } from "./Components/map/Navbar/ShowDirectionInfo";
 
 import {
   APIProvider,
@@ -45,6 +46,9 @@ export default function App() {
   const [useRoute, setUseRoute] = useState(false);
   const [stateClickRoute, setStateClickRoute] = useState(false);
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
+
+  const [distance, setDistance] = useState("0 km");
+  const [duration, setDuration] = useState("0 min");
 
   async function showPosition(po) {
     setLatitudeFromUser(po.coords.latitude);
@@ -130,6 +134,8 @@ export default function App() {
                   setUseRoute={setUseRoute}
                   stateClickRoute={stateClickRoute}
                   setMap={setMap}
+                  setDistance={setDistance}
+                  setDuration={setDuration}
                 />
 
                 {useRoute && (
@@ -183,6 +189,8 @@ export default function App() {
               setOriginLng={setOriginLng}
               setLatitudeFromLocation={setLatitudeFromLocation}
               map={map}
+              setDistance={setDistance}
+              setDuration={setDuration}
             />
 
             {/* Route Bar */}
@@ -198,6 +206,10 @@ export default function App() {
                 stateClickRoute={stateClickRoute}
                 setStateClickRoute={setStateClickRoute}
               />
+            )}
+
+            {openDirectionBar && (
+              <ShowDirectionInfo distance={distance} duration={duration} />
             )}
             <div className="result-list">
               {/* Search Result*/}
