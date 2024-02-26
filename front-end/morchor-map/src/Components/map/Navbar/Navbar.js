@@ -37,6 +37,8 @@ export const Navbar = ({
   setOriginLng,
   setLatitudeFromLocation,
   map,
+  setDistance,
+  setDuration,
 }) => {
   const [searchText, setSearchText] = useState("");
 
@@ -57,7 +59,12 @@ export const Navbar = ({
     setOriginLat(latitudeFromUser);
     setOriginLng(longitudeFromUser);
     setLatitudeFromLocation(latitudeFromUser);
-    map.panTo({lat: parseFloat(latitudeFromUser), lng: parseFloat(longitudeFromUser)})
+    map.panTo({
+      lat: parseFloat(latitudeFromUser),
+      lng: parseFloat(longitudeFromUser),
+    });
+    setDistance("0 km");
+    setDuration("0 min");
   };
 
   const handleOpen = () => {
