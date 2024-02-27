@@ -73,8 +73,11 @@ export const Directions = ({
             lng: parseFloat(secondLocation.lng),
           });
 
-
-          if (route[0].legs !== undefined) {
+          if (
+            route.length !== 0 &&
+            route[0] !== undefined &&
+            route[0].legs !== undefined
+          ) {
             setDistance(route[0].legs[0].distance.text);
             setDuration(route[0].legs[0].duration.text);
             console.log(route[0].legs[0].distance);
