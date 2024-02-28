@@ -3,12 +3,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LocationModule } from './location/location.module';
+require('dotenv').config();
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://admin:DJxawOWvdsdBnn4y@finalproject.0siimhv.mongodb.net/dev',
-      // 'mongodb+srv://admin:DJxawOWvdsdBnn4y@finalproject.0siimhv.mongodb.net/prod',
+      process.env.MONGO_DB_DEV,
+      // process.env.MONBO_DB_PROD,
     ),
     LocationModule,
   ],

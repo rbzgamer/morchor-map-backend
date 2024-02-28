@@ -18,6 +18,7 @@ import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
+import { RoutingLocationDTO } from '../dto/RoutingLocation.dto';
 
 @Controller('api/locations')
 export class LocationController {
