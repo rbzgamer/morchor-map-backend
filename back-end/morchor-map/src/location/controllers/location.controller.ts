@@ -55,12 +55,6 @@ export class LocationController {
     return await this.locationService.getLocationsWithOneNameAndLatitudeLongtitude();
   }
 
-  @Get('/google-maps/test-place')
-  async getGoogleMapsLocation(@Query() searchLocationDTO: SearchLocationDTO) {
-    return await this.locationService.queryLocationsFromGoogle(
-      searchLocationDTO,
-    );
-  }
   @Post('/add')
   async addLocation(@Body() locationDetails: CreateLocationDTO) {
     return await this.locationService.addLocation(locationDetails);

@@ -13,12 +13,7 @@ import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
-import {
-  Client,
-  Place,
-  PlaceData,
-  PlacesNearbyResponse,
-} from '@googlemaps/google-maps-services-js';
+import { Client, Place, PlaceData } from '@googlemaps/google-maps-services-js';
 require('dotenv').config();
 
 @Injectable()
@@ -34,7 +29,79 @@ export class LocationService {
   }
 
   async getLocation(searchLocationDTO: SearchLocationDTO): Promise<Location[]> {
-    return await this.queryLocationFromDatabase(searchLocationDTO);
+    if (searchLocationDTO.locationName && searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          $and: [
+            ...(searchLocationDTO.locationName
+              ? [
+                  {
+                    $or: [
+                      {
+                        locationName: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                      {
+                        room: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                    ],
+                  },
+                ]
+              : []),
+            {
+              category: {
+                $regex: searchLocationDTO.category,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else if (!searchLocationDTO.locationName && searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          category: {
+            $regex: searchLocationDTO.category,
+            $options: 'i',
+          },
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
+      const dbLocation = await this.locationModel
+        .find({
+          $or: [
+            {
+              locationName: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+            {
+              room: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .sort({ category: 1 })
+        .exec();
+
+      if (dbLocation.length == 0) {
+        return await this.queryLocationsFromGoogle(searchLocationDTO);
+      } else {
+        return dbLocation;
+      }
+    } else {
+      return await this.locationModel.find().sort({ category: 1 }).exec();
+    }
   }
 
   async addLocation(locationDetails: CreateLocationDTO) {
@@ -171,96 +238,13 @@ export class LocationService {
     return locationOneNameDTO;
   }
 
-  async queryLocationFromDatabase(
-    searchLocationDTO: SearchLocationDTO,
-  ): Promise<Location[]> {
-    if (searchLocationDTO.locationName && searchLocationDTO.category) {
-      return await this.locationModel
-        .find({
-          $and: [
-            ...(searchLocationDTO.locationName
-              ? [
-                  {
-                    $or: [
-                      {
-                        locationName: {
-                          $regex: searchLocationDTO.locationName,
-                          $options: 'i',
-                        },
-                      },
-                      {
-                        room: {
-                          $regex: searchLocationDTO.locationName,
-                          $options: 'i',
-                        },
-                      },
-                    ],
-                  },
-                ]
-              : []),
-            {
-              category: {
-                $regex: searchLocationDTO.category,
-                $options: 'i',
-              },
-            },
-          ],
-        })
-        .sort({ category: 1 })
-        .exec();
-    } else if (!searchLocationDTO.locationName && searchLocationDTO.category) {
-      return await this.locationModel
-        .find({
-          category: {
-            $regex: searchLocationDTO.category,
-            $options: 'i',
-          },
-        })
-        .sort({ category: 1 })
-        .exec();
-    } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
-      return await this.locationModel
-        .find({
-          $or: [
-            {
-              locationName: {
-                $regex: searchLocationDTO.locationName,
-                $options: 'i',
-              },
-            },
-            {
-              room: {
-                $regex: searchLocationDTO.locationName,
-                $options: 'i',
-              },
-            },
-          ],
-        })
-        .sort({ category: 1 })
-        .exec();
-    } else {
-      return await this.locationModel.find().sort({ category: 1 }).exec();
-    }
-  }
-
-  async queryLocationsFromGoogle(
-    searchLocationDTO: SearchLocationDTO,
-    // dbLocations: Location[],
-  ) {
+  async queryLocationsFromGoogle(searchLocationDTO: SearchLocationDTO) {
     // Use Google Maps Places API to query locations
     let response;
     if (searchLocationDTO.locationName) {
       response = await this.client.textSearch({
         params: {
           query: searchLocationDTO.locationName,
-          key: process.env.GOOGLE_MAPS_API,
-        },
-      });
-    } else {
-      response = await this.client.placesNearby({
-        params: {
-          location: '18.802581402286663,98.9515193318211',
-          radius: 10000,
           key: process.env.GOOGLE_MAPS_API,
         },
       });
@@ -272,7 +256,6 @@ export class LocationService {
     );
 
     return googleLocations;
-    // return response.data.results;
   }
 
   private convertGoogleToLocation(response: Place): Location {

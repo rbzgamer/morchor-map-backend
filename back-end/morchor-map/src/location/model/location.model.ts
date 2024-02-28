@@ -10,9 +10,6 @@ export const LocationSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  img: {
-    type: [String],
-  },
   latitude: {
     type: String,
     require: true,
@@ -30,7 +27,6 @@ export interface Location {
   id?: string;
   locationName: string[];
   category?: string;
-  img?: string;
   latitude: string;
   longitude: string;
   room?: string[];
