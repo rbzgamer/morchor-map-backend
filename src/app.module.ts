@@ -6,13 +6,7 @@ import { LocationModule } from './location/location.module';
 require('dotenv').config();
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(
-      process.env.MONGO_DB_DEV,
-      // process.env.MONBO_DB_PROD,
-    ),
-    LocationModule,
-  ],
+  imports: [MongooseModule.forRoot(process.env.MONGO_DB_PROD), LocationModule],
   controllers: [AppController],
   providers: [AppService],
 })
