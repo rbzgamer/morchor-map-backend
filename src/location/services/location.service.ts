@@ -264,8 +264,10 @@ export class LocationService {
   private convertGoogleToLocation(response: Place): Location {
     const location: Location = {
       locationName: [response.name],
+      category: '',
       latitude: response.geometry.location.lat.toString(),
       longitude: response.geometry.location.lng.toString(),
+      room: [],
     };
     return location;
   }
