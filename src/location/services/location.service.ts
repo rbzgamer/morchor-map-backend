@@ -247,6 +247,8 @@ export class LocationService {
         params: {
           query: searchLocationDTO.locationName,
           region: 'TH',
+          location: '18.802581402286663,98.9515193318211',
+          radius: 50000,
           key: process.env.GOOGLE_MAPS_API,
         },
       });
