@@ -25,6 +25,7 @@ export class LocationService {
   private client = new Client();
 
   getLocationTest(): string {
+    console.log('Hello Location!');
     return 'Hello Location!';
   }
 
