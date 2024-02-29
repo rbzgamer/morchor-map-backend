@@ -96,6 +96,8 @@ export class LocationService {
         .exec();
 
       if (dbLocation.length == 0) {
+        console.log('im here');
+        console.log(this.queryLocationsFromGoogle(searchLocationDTO));
         return await this.queryLocationsFromGoogle(searchLocationDTO);
       } else {
         return dbLocation;
