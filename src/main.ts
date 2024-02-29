@@ -11,14 +11,10 @@ async function bootstrap() {
     credentials: true,
   });
 
-  await app.listen(5000);
-  // Use `PORT` provided in environment or default to 3000
-  const port = process.env.PORT || 3000;
+  // Use `PORT` provided in environment or default to 5000
+  const port = process.env.PORT || 5000;
 
-  // Listen on `port` and 0.0.0.0
-  async function bootstrap() {
-    // ...
-    (await app.listen(port, '0.0.0.0')) || (await app.listen(5000));
-  }
+  // Listen on `port` and 0.0.0.0 or 5000
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();
