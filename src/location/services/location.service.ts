@@ -97,7 +97,7 @@ export class LocationService {
 
       if (dbLocation.length == 0) {
         console.log('im here');
-        console.log(this.queryLocationsFromGoogle(searchLocationDTO));
+        console.log(await this.queryLocationsFromGoogle(searchLocationDTO));
         return await this.queryLocationsFromGoogle(searchLocationDTO);
       } else {
         return dbLocation;
@@ -245,19 +245,22 @@ export class LocationService {
     // Use Google Maps Places API to query locations
     let response;
     if (searchLocationDTO.locationName) {
+      console.log('searching');
       response = await this.client.textSearch({
         params: {
           query: searchLocationDTO.locationName,
           key: process.env.GOOGLE_MAPS_API,
         },
       });
+      console.log(response);
     }
 
     // Process the response from Google Maps Places API
     const googleLocations: Location[] = response.data.results.map(
       (location: Partial<PlaceData>) => this.convertGoogleToLocation(location),
     );
-
+    console.log('google locaitons');
+    console.log(googleLocations);
     return googleLocations;
   }
 
