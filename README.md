@@ -25,11 +25,16 @@
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+We use [Google Maps Services](https://github.com/googlemaps/google-maps-services-js?fbclid=IwAR29lQAicsgWty7B77ngoisKdT1eIFscyIwzWzllH3jK8VqaBKAxLqzc1Fg) for Node.js to develop this project too.
 
 ## Installation
 
+First you have to clone this project and run these command.
+
 ```bash
 $ npm install
+and
+$ npm install @googlemaps/google-maps-services-js
 ```
 
 ## Running the app
@@ -37,9 +42,13 @@ $ npm install
 ```bash
 # development
 $ npm run start
+or
+$ nest start
 
 # watch mode
 $ npm run start:dev
+or
+$ nest start --watch
 
 # production mode
 $ npm run start:prod
