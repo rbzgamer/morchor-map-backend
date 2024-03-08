@@ -42,6 +42,7 @@ $ npm install @googlemaps/google-maps-services-js
 1. Copy `.env.example` file and delete `.example`
 2. Place your google maps api key on `GOOGLE_MAPS_API`
 3. Place your mongo db link for dev and prod on `MONGO_DB_DEV` and `MONGO_DB_PROD`
+4. Place your front-end link on `FRONT_END`
 
 ## Running the app
 
